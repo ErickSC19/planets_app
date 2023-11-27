@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:astronomy_app/src/pages/celestial_body_screen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:astronomy_app/src/models/celestial_body.dart';
@@ -75,6 +76,7 @@ class _MainScreenState extends State<MainScreen> {
                       size: 6779,
                       distanceFromEarth: 5.64,
                       imagePath: image!.path,
+                      systemId: 1
                     );
                     await DBHelper.saveCelestialBody(celestialBody);
 
@@ -103,6 +105,7 @@ class _MainScreenState extends State<MainScreen> {
                       size: 679,
                       distanceFromEarth: 1.64,
                       imagePath: image!.path,
+                      systemId: 1
                     );
                     await DBHelper.saveCelestialBody(celestialBody);
 
@@ -189,8 +192,17 @@ class _MainScreenState extends State<MainScreen> {
                       // _controller.forward();
                       return GestureDetector(
                         onTap: () {
-                          selectedImgNotifier.value =
-                              snapshot.data![index].toString();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CelestialBodyScreen(),
+                              // Pass the arguments as part of the RouteSettings. The
+                              // DetailScreen reads the arguments from these settings.
+                              settings: RouteSettings(
+                                arguments: snapshot.data![index],
+                              ),
+                            ),
+                          );
                         },
                         child: ExtendedRawImage(
                           image: state.extendedImageInfo?.image,

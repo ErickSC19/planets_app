@@ -1,3 +1,4 @@
+import 'package:astronomy_app/src/pages/systems_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:astronomy_app/src/pages/main_screen.dart';
 
@@ -8,7 +9,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-          return MaterialPageRoute(builder: (_) => MainScreen());
+          return MaterialPageRoute(builder: (_) => SystemsScreen());
       case '/second':
         // Validation of correct data type
         if (args is String) {

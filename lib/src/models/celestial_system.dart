@@ -2,28 +2,27 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:astronomy_app/src/models/celestial_body.dart';
 
 class CelestialSystem {
-  final int id;
+  final int? id;
   final String name;
-  final List<CelestialBody> celestialBodies;
+  final String imagePath;
 
   CelestialSystem({
-    required this.id,
+    this.id,
     required this.name,
-    required this.celestialBodies,
+    required this.imagePath,
   });
 
   CelestialSystem copyWith({
     int? id,
     String? name,
-    List<CelestialBody>? celestialBodies,
+    String? imagePath,
   }) {
     return CelestialSystem(
       id: id ?? this.id,
       name: name ?? this.name,
-      celestialBodies: celestialBodies ?? this.celestialBodies,
+      imagePath: imagePath ?? this.imagePath,
     );
   }
 
@@ -31,7 +30,7 @@ class CelestialSystem {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'celestialBodies': celestialBodies.map((x) => x.toMap()).toList(),
+      'imagePath': imagePath,
     };
   }
 
@@ -39,11 +38,7 @@ class CelestialSystem {
     return CelestialSystem(
       id: map['id'] as int,
       name: map['name'] as String,
-      celestialBodies: List<CelestialBody>.from(
-        (map['celestialBodies'] as List<int>).map<CelestialBody>(
-          (x) => CelestialBody.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      imagePath: map['imagePath'] as String,
     );
   }
 
@@ -54,7 +49,7 @@ class CelestialSystem {
 
   @override
   String toString() =>
-      'CelestialSystem(id: $id, name: $name, celestialBodies: $celestialBodies)';
+      'CelestialSystem(id: $id, name: $name, imagePath: $imagePath)';
 
   @override
   bool operator ==(covariant CelestialSystem other) {
@@ -62,9 +57,9 @@ class CelestialSystem {
 
     return other.id == id &&
         other.name == name &&
-        listEquals(other.celestialBodies, celestialBodies);
+        other.imagePath == imagePath;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ celestialBodies.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ imagePath.hashCode;
 }
