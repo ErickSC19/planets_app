@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:astronomy_app/src/models/celestial_body.dart';
 import 'package:astronomy_app/src/models/celestial_system.dart';
 import 'package:astronomy_app/src/services/db_helper.dart';
 import 'package:flutter/foundation.dart';
@@ -7,26 +8,33 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 // Define a custom Form widget.
-class SystemForm extends StatefulWidget {
-  const SystemForm({super.key});
+class BodyForm extends StatefulWidget {
+  const BodyForm({super.key});
 
   @override
-  SystemFormState createState() {
-    return SystemFormState();
+  BodyFormState createState() {
+    return BodyFormState();
   }
 }
 
 // Define a corresponding State class.
 // This class holds data related to the form.
-class SystemFormState extends State<SystemForm> {
+class BodyFormState extends State<BodyForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<SystemFormState>.
   XFile? image;
+
   final _formKey = GlobalKey<FormState>();
-  final formController = TextEditingController();
+
+  final nameController = TextEditingController();
+  final descrController = TextEditingController();
+  final typeController = TextEditingController();
+  final natController = TextEditingController();
+  final sizeController = TextEditingController();
+  final distanceController = TextEditingController();
 
   @override
   void dispose() {
@@ -34,13 +42,18 @@ class SystemFormState extends State<SystemForm> {
     //setState(() {
     // image = null;
     //);
-    formController.dispose();
+    nameController.dispose();
+    descrController.dispose();
+    typeController.dispose();
+    natController.dispose();
+    sizeController.dispose();
+    distanceController.dispose();
     super.dispose();
   }
 
-  String imgPath = "";
   @override
   Widget build(BuildContext context) {
+    final sysId = ModalRoute.of(context)!.settings.arguments as int;
     // Build a Form widget using the _formKey created above.
     return Scaffold(
       body: Padding(
@@ -60,7 +73,27 @@ class SystemFormState extends State<SystemForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('System Name'),
+                    const Text('Body Name'),
+                    TextFormField(
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Text('Body description'),
+                    TextFormField(
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Text('Size'),
                     TextFormField(
                       // The validator receives the text that the user has entered.
                       validator: (value) {
@@ -137,12 +170,17 @@ class SystemFormState extends State<SystemForm> {
                           if (_formKey.currentState!.validate() &&
                               image != null) {
                             try {
-                              final celestialSystem = CelestialSystem(
-                                name: formController.text,
-                                imagePath: image!.path,
-                              );
-                              await DBHelper.saveCelestialSystem(
-                                  celestialSystem);
+                              final celestialSystem = CelestialBody(
+                                  name: nameController.text,
+                                  description: descrController.text,
+                                  type: typeController.text,
+                                  majorityNature: natController.text,
+                                  size: sizeController.text as double,
+                                  distanceFromEarth:
+                                      distanceController.text as double,
+                                  imagePath: image!.path,
+                                  systemId: sysId);
+                              await DBHelper.saveCelestialBody(celestialSystem);
                               setState(() {
                                 Navigator.pop(context);
                               });
@@ -165,7 +203,7 @@ class SystemFormState extends State<SystemForm> {
                             }
                           }
                         },
-                        child: const Text('Add System'),
+                        child: const Text('Add Celestial Body'),
                       ),
                     ),
                   ],

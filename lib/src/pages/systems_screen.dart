@@ -25,7 +25,7 @@ class _SystemsScreenState extends State<SystemsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Systems',
+                  const Text('Systems',
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
                   IconButton(

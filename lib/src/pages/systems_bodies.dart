@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:astronomy_app/src/models/celestial_body.dart';
 import 'package:astronomy_app/src/models/celestial_system.dart';
+import 'package:astronomy_app/src/pages/body_form.dart';
 import 'package:astronomy_app/src/pages/celestial_body_screen.dart';
 import 'package:astronomy_app/src/services/db_helper.dart';
 import 'package:extended_image/extended_image.dart';
@@ -20,13 +21,35 @@ class _SystemBodiesState extends State<SystemBodies> {
     final system =
         ModalRoute.of(context)!.settings.arguments as CelestialSystem;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(system.name),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(system.name,
+                    style:
+                        const TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BodyForm(),
+                          settings: RouteSettings(
+                            arguments: system.id,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.white70,
+                      size: 36,
+                    ))
+              ],
+            ),
             getCelestialSystemsImageGrid(),
             Row(
               children: [],
