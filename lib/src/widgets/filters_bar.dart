@@ -1,4 +1,5 @@
 import 'package:astronomy_app/src/provider/app_state_provider.dart';
+import 'package:astronomy_app/src/widgets/custom_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ class _FiltersBarState extends State<FiltersBar> {
                     }
                   },
                   icon: const Icon(
-                    Icons.access_alarms,
+                    CustomIcons.comet,
                     size: 16,
                   ),
                   color: value.typeFilter == 'Comet'
@@ -75,7 +76,7 @@ class _FiltersBarState extends State<FiltersBar> {
                     }
                   },
                   icon: const Icon(
-                    Icons.account_box_rounded,
+                    CustomIcons.asteroid,
                     size: 16,
                   ),
                   color: value.typeFilter == 'Asteroid'

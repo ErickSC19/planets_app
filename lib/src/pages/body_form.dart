@@ -221,13 +221,11 @@ class BodyFormState extends State<BodyForm> {
                                                   distanceController.text),
                                               imagePath: image!.path,
                                               systemId: sysId);
-                                          print(celestialBody);
                                           await DBHelper.saveCelestialBody(
                                               celestialBody);
                                           final system =
                                               await DBHelper.getSystemById(
                                                   sysId);
-                                          print(system);
                                           setState(() {
                                             Navigator.pushReplacement(
                                                 context,
@@ -236,7 +234,7 @@ class BodyFormState extends State<BodyForm> {
                                                       (BuildContext context) =>
                                                           const SystemBodies(),
                                                   settings: RouteSettings(
-                                                    arguments: system,
+                                                    arguments: system[0],
                                                   ),
                                                 ));
                                           });

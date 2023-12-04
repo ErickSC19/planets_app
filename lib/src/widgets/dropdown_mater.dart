@@ -1,14 +1,16 @@
 import 'package:astronomy_app/src/provider/app_state_provider.dart';
+import 'package:astronomy_app/src/widgets/custom_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum MaterLabel {
-  rock('Rock', Icons.sentiment_satisfied_outlined),
+  rock('Rock', CustomIcons.stone),
   gas(
     'Gas',
     Icons.cloud_outlined,
   ),
-  ice('Ice', Icons.ac_unit);
+  ice('Ice', Icons.ac_unit),
+  liquid('Liquid', Icons.water);
 
   const MaterLabel(this.label, this.icon);
   final String label;
@@ -50,10 +52,10 @@ class _DropdownMaterState extends State<DropdownMater> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(bodyType.icon),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Text(
                           bodyType.label,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                         )
                       ],
                     ),

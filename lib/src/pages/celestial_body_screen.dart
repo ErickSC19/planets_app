@@ -1,10 +1,33 @@
 import 'dart:io';
 
+import 'package:astronomy_app/src/pages/systems_bodies.dart';
+import 'package:astronomy_app/src/services/db_helper.dart';
+import 'package:astronomy_app/src/widgets/custom_icons_icons.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:astronomy_app/src/models/celestial_body.dart';
 
-class CelestialBodyScreen extends StatelessWidget {
+class CelestialBodyScreen extends StatefulWidget {
   const CelestialBodyScreen({super.key});
+
+  @override
+  State<CelestialBodyScreen> createState() => _CelestialBodyScreenState();
+}
+
+class _CelestialBodyScreenState extends State<CelestialBodyScreen> {
+  static const Map materIcons = {
+    'Rock': CustomIcons.stone,
+    'Gas': Icons.cloud_outlined,
+    'Ice': Icons.ac_unit,
+    'Liquid': Icons.water
+  };
+
+  static const Map typeIcons = {
+    'Planet': Icons.public,
+    'Comet': CustomIcons.comet,
+    'Moon': Icons.nightlight_rounded,
+    'Asteroid': CustomIcons.asteroid
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +42,16 @@ class CelestialBodyScreen extends StatelessWidget {
               child: Image.file(File(body.imagePath), fit: BoxFit.cover),
             ),
             Container(
-                margin: const EdgeInsets.only(top: 28),
+                margin: const EdgeInsets.only(top: 30),
+                color: const Color.fromRGBO(0, 0, 0, 0.479),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          setState(() {
+                            Navigator.pop(context);
+                          });
                         },
                         icon: const Icon(
                           Icons.arrow_back,
@@ -33,7 +59,28 @@ class CelestialBodyScreen extends StatelessWidget {
                           size: 36,
                         )),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            await DBHelper.deleteCelestialBody(body);
+                            final system =
+                                await DBHelper.getSystemById(body.systemId);
+                            setState(() {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const SystemBodies(),
+                                    settings: RouteSettings(
+                                      arguments: system[0],
+                                    ),
+                                  ));
+                            });
+                          } catch (e) {
+                            if (kDebugMode) {
+                              print(e);
+                            }
+                          }
+                        },
                         icon: const Icon(
                           Icons.delete,
                           color: Colors.white70,
@@ -68,7 +115,8 @@ class CelestialBodyScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.ac_unit, size: 16),
+                      Icon(typeIcons[body.type], size: 16),
+                      const SizedBox(width: 8),
                       Text(
                         body.type,
                         style: const TextStyle(
@@ -80,7 +128,8 @@ class CelestialBodyScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.ac_unit, size: 16),
+                      const Icon(CustomIcons.radius, size: 16),
+                      const SizedBox(width: 8),
                       Text(
                         '${body.size} KM',
                         style: const TextStyle(
@@ -92,13 +141,14 @@ class CelestialBodyScreen extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.ac_unit, size: 16),
+                      Icon(materIcons[body.majorityNature], size: 16),
+                      const SizedBox(width: 8),
                       Text(
                         body.majorityNature,
                         style: const TextStyle(
@@ -110,7 +160,8 @@ class CelestialBodyScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.outbond, size: 24),
+                      const Icon(CustomIcons.distance, size: 24),
+                      const SizedBox(width: 8),
                       Text(
                         '${body.distanceFromEarth} KM',
                         style: const TextStyle(
@@ -122,7 +173,7 @@ class CelestialBodyScreen extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 36),
+              const SizedBox(height: 36),
               Text(
                 body.description,
                 overflow: TextOverflow.clip,

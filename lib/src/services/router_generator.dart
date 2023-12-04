@@ -1,6 +1,5 @@
 import 'package:astronomy_app/src/pages/systems_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:astronomy_app/src/pages/main_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -32,9 +31,9 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Error'),
+          title: const Text('Error'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('ERROR'),
         ),
       );

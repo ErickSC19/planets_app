@@ -24,7 +24,7 @@ class DBHelper {
 
     // Delete all records
     await db.delete('celestial_bodies');
-
+    await db.delete('celestial_systems');
     // Reset the ID counter
     await db.setVersion(1);
   }
@@ -61,7 +61,7 @@ class DBHelper {
           id: maps[i]['id'],
           name: maps[i]['name'],
           imagePath: maps[i]['imagePath']);
-    });
+    }).reversed.toList();
   }
 
   static Future<List<CelestialSystem>> getSystemById(int systemId) async {
@@ -76,7 +76,22 @@ class DBHelper {
           id: maps[i]['id'],
           name: maps[i]['name'],
           imagePath: maps[i]['imagePath']);
-    });
+    }).reversed.toList();
+  }
+
+  static Future<void> deleteCelestialSystem(
+      CelestialSystem celestialSystem) async {
+    final db = await DBHelper.database();
+    await db.delete(
+      'celestial_bodies',
+      where: 'systemId = ?',
+      whereArgs: [celestialSystem.id],
+    );
+    await db.delete(
+      'celestial_systems',
+      where: 'id = ?',
+      whereArgs: [celestialSystem.id],
+    );
   }
 
   static Future<void> saveCelestialBody(CelestialBody celestialBody) async {
@@ -129,7 +144,35 @@ class DBHelper {
           distanceFromEarth: maps[i]['distanceFromEarth'],
           imagePath: maps[i]['imagePath'],
           systemId: maps[i]['systemId']);
-    });
+    }).reversed.toList();
+  }
+
+  static Future<List<CelestialBody>> getSystemBodiesByType(
+      int sysId, String? type) async {
+    final db = await DBHelper.database();
+    final List<Map<String, dynamic>> maps = type != null
+        ? await db.query(
+            'celestial_bodies',
+            where: 'type = ? AND systemId = ?',
+            whereArgs: [type, sysId],
+          )
+        : await db.query(
+            'celestial_bodies',
+            where: 'systemId = ?',
+            whereArgs: [sysId],
+          );
+    return List.generate(maps.length, (i) {
+      return CelestialBody(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          description: maps[i]['description'],
+          type: maps[i]['type'],
+          majorityNature: maps[i]['majorityNature'],
+          size: maps[i]['size'],
+          distanceFromEarth: maps[i]['distanceFromEarth'],
+          imagePath: maps[i]['imagePath'],
+          systemId: maps[i]['systemId']);
+    }).reversed.toList();
   }
 
   static Future<List<CelestialBody>> getCelestialBodies() async {
@@ -146,6 +189,6 @@ class DBHelper {
           distanceFromEarth: maps[i]['distanceFromEarth'],
           imagePath: maps[i]['imagePath'],
           systemId: maps[i]['systemId']);
-    });
+    }).reversed.toList();
   }
 }
