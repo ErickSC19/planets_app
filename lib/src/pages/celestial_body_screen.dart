@@ -19,7 +19,7 @@ class CelestialBodyScreen extends StatelessWidget {
               child: Image.file(File(body.imagePath), fit: BoxFit.cover),
             ),
             Container(
-                margin: EdgeInsets.only(top: 28),
+                margin: const EdgeInsets.only(top: 28),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -44,7 +44,7 @@ class CelestialBodyScreen extends StatelessWidget {
           ],
         ),
         Padding(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             children: [
               Row(
@@ -55,14 +55,14 @@ class CelestialBodyScreen extends StatelessWidget {
                   Text(
                     body.name,
                     overflow: TextOverflow.clip,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         decoration: TextDecoration.none,
                         fontSize: 52),
                   )
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -71,7 +71,7 @@ class CelestialBodyScreen extends StatelessWidget {
                       Icon(Icons.ac_unit, size: 16),
                       Text(
                         body.type,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white70,
                             decoration: TextDecoration.none,
                             fontSize: 24),
@@ -82,8 +82,8 @@ class CelestialBodyScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.ac_unit, size: 16),
                       Text(
-                        body.size.toString(),
-                        style: TextStyle(
+                        '${body.size} KM',
+                        style: const TextStyle(
                             color: Colors.white70,
                             decoration: TextDecoration.none,
                             fontSize: 24),
@@ -101,7 +101,7 @@ class CelestialBodyScreen extends StatelessWidget {
                       Icon(Icons.ac_unit, size: 16),
                       Text(
                         body.majorityNature,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white70,
                             decoration: TextDecoration.none,
                             fontSize: 24),
@@ -112,8 +112,8 @@ class CelestialBodyScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.ac_unit, size: 16),
                       Text(
-                        body.distanceFromEarth.toString(),
-                        style: TextStyle(
+                        '${body.distanceFromEarth} KM',
+                        style: const TextStyle(
                             color: Colors.white70,
                             decoration: TextDecoration.none,
                             fontSize: 24),
@@ -126,7 +126,7 @@ class CelestialBodyScreen extends StatelessWidget {
               Text(
                 body.description,
                 overflow: TextOverflow.clip,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white70,
                     decoration: TextDecoration.none,
                     fontSize: 16),

@@ -38,10 +38,10 @@ class _DropdownTypeState extends State<DropdownType> {
                 height: 2,
                 color: Colors.white,
               ),
-              onChanged: (String? value) {
+              onChanged: (String? val) {
                 // This is called when the user selects an item.
                 final appState = context.read<AppStateModel>();
-                appState.changeType(value);
+                appState.changeType(val);
               },
               items: TypeLabel.values.map<DropdownMenuItem<String>>(
                 (TypeLabel bodyType) {
