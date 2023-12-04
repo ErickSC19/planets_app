@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 enum TypeLabel {
-  planet('Planet', Icons.sentiment_satisfied_outlined),
+  planet('Planet', Icons.public),
   comet(
     'Comet',
     Icons.cloud_outlined,
   ),
-  moon('Moon', Icons.brush_outlined),
+  moon('Moon', Icons.nightlight_rounded),
   asteroid('Asteroid', Icons.favorite);
 
   const TypeLabel(this.label, this.icon);

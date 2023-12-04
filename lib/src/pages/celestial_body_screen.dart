@@ -110,7 +110,7 @@ class CelestialBodyScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.ac_unit, size: 16),
+                      Icon(Icons.outbond, size: 24),
                       Text(
                         '${body.distanceFromEarth} KM',
                         style: const TextStyle(

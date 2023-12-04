@@ -8,7 +8,7 @@ enum MaterLabel {
     'Gas',
     Icons.cloud_outlined,
   ),
-  ice('Ice', Icons.brush_outlined);
+  ice('Ice', Icons.ac_unit);
 
   const MaterLabel(this.label, this.icon);
   final String label;

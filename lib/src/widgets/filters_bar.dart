@@ -25,7 +25,7 @@ class _FiltersBarState extends State<FiltersBar> {
                       }
                     },
                     icon: const Icon(
-                      Icons.ac_unit,
+                      Icons.public,
                       size: 16,
                     ),
                     color: value.typeFilter == 'Planet'
