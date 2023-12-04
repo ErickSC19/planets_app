@@ -64,6 +64,21 @@ class DBHelper {
     });
   }
 
+  static Future<List<CelestialSystem>> getSystemById(int systemId) async {
+    final db = await DBHelper.database();
+    final List<Map<String, dynamic>> maps = await db.query(
+      'celestial_systems',
+      where: 'id = ?',
+      whereArgs: [systemId],
+    );
+    return List.generate(maps.length, (i) {
+      return CelestialSystem(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          imagePath: maps[i]['imagePath']);
+    });
+  }
+
   static Future<void> saveCelestialBody(CelestialBody celestialBody) async {
     final db = await DBHelper.database();
     final List<Map<String, dynamic>> maps = await db.query(

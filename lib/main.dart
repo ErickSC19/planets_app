@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:astronomy_app/src/provider/app_state_provider.dart';
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
@@ -17,5 +18,7 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppStateModel(),
+      child: MyApp(settingsController: settingsController)));
 }
